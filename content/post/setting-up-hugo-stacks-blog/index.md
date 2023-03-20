@@ -8,6 +8,12 @@ license:
 hidden: false
 comments: true
 draft: false
+categories:
+    - Tutorials
+tags:
+    - Hugo
+    - Favicon
+    - Github-Pages
 ---
 
 # Setting Up Hugo Theme Stack
