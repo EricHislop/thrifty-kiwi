@@ -4,7 +4,7 @@ languageCode = "en-us"
 paginate = 5
 title = "Thrifty Kiwi"
 [params]
-  favicon = "favicon.svg"
+  favicon = "favicon.ico"
 
 
 # Theme i18n support
