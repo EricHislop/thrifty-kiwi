@@ -1,0 +1,217 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="In this multipart series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we&amp;rsquo;ll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.
+Check out my Pinterest pins to see the results of this automation tool in action.
+Introduction Affiliate marketing can be a lucrative way to earn passive income."><title>Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)</title><link rel=canonical href=http://thriftykiwi.com/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/><link rel=stylesheet href=/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css><meta property="og:title" content="Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)"><meta property="og:description" content="In this multipart series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we&amp;rsquo;ll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.
+Check out my Pinterest pins to see the results of this automation tool in action.
+Introduction Affiliate marketing can be a lucrative way to earn passive income."><meta property="og:url" content="http://thriftykiwi.com/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/"><meta property="og:site_name" content="Thrifty Kiwi"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="openai"><meta property="article:tag" content="javascript"><meta property="article:tag" content="api"><meta property="article:published_time" content="2023-04-21T16:42:30+12:00"><meta property="article:modified_time" content="2023-04-21T16:42:30+12:00"><meta property="og:image" content="http://thriftykiwi.com/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/cover.png"><meta name=twitter:title content="Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)"><meta name=twitter:description content="In this multipart series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we&amp;rsquo;ll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.
+Check out my Pinterest pins to see the results of this automation tool in action.
+Introduction Affiliate marketing can be a lucrative way to earn passive income."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://thriftykiwi.com/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/cover.png"><link rel="shortcut icon" href=favicon.ico><link rel=icon type=image/svg+xml href=/favicon.svg><link rel=apple-touch-icon href=/favicon.ico><link rel=icon type=image/svg+xml sizes=192x192 href=/favicon.svg></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_huf803a4ca04d991498bc0470dbecfb488_1120045_300x0_resize_box_3.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🥝</span></figure><div class=site-meta><h1 class=site-name><a href=/>Thrifty Kiwi</a></h1><h2 class=site-description>Software engineer, bargain hunter, dad, tech enthusiast, gamer. Blogging about tech, money-saving tips, and cool things.</h2></div></header><ol class=social-menu><li><a href=https://github.com/erichislop target=_blank title=GitHub rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/Eric_L_H target=_blank title=Twitter rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#introduction>Introduction</a></li><li><a href=#overview-of-the-project>Overview of the Project</a></li><li><a href=#setting-up-the-environment>Setting Up the Environment</a></li><li><a href=#reading-data-from-a-csv-file>Reading Data from a CSV File</a></li><li><a href=#generating-pinterest-descriptions-with-gpt-35-turbo>Generating Pinterest Descriptions with GPT-3.5 Turbo</a></li><li><a href=#updating-the-original-csv-file>Updating the Original CSV File</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/><img src=/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/cover_hub5b971c06b5dd13137d4690e20226aad_1206974_800x0_resize_box_3.png srcset="/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/cover_hub5b971c06b5dd13137d4690e20226aad_1206974_800x0_resize_box_3.png 800w, /p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/cover_hub5b971c06b5dd13137d4690e20226aad_1206974_1600x0_resize_box_3.png 1600w" width=800 height=1200 loading=lazy alt="Featured image of post Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)"></a></div><div class=article-details><header class=article-category><a href=/categories/gpt-3/>GPT-3</a>
+<a href=/categories/pinterest/>Pinterest</a>
+<a href=/categories/affiliate-marketing/>Affiliate Marketing</a>
+<a href=/categories/automation/>Automation</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/creating-a-pinterest-affiliate-marketing-automation-tool-using-gpt-3.5-turbo-part-1/>Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Apr 21, 2023</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>5 minute read</time></div></footer></div></header><section class=article-content><p>In this multipart series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we&rsquo;ll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.</p><p>Check out my <a class=link href=https://www.pinterest.nz/ericlhislop/pins/ target=_blank rel=noopener>Pinterest pins</a> to see the results of this automation tool in action.</p><h2 id=introduction>Introduction</h2><p>Affiliate marketing can be a lucrative way to earn passive income. One popular platform for promoting affiliate links is Pinterest. However, manually creating and managing pins can be time-consuming. In this blog post, we will discuss how to automate this process using OpenAI&rsquo;s GPT-3.5 Turbo and some other tools.</p><p>GPT-3.5 Turbo is a powerful language model developed by OpenAI. It can be used for various tasks, including generating human-like text. We will use it to create engaging and informative descriptions for our Pinterest pins.</p><h2 id=overview-of-the-project>Overview of the Project</h2><p>Our project involves the following steps:</p><ol><li>Read data from a CSV file containing affiliate link names and URLs (obtained from <a class=link href=https://rakutenadvertising.com/ target=_blank rel=noopener>Rakuten Advertising</a>)</li><li>Generate Pinterest descriptions for each link using GPT-3.5 Turbo</li><li>Shorten the URLs using the Bitly API (To be covered in Part 2)</li><li>Create pins on Pinterest using the Pinterest API (To be covered in Part 2)</li><li>Check image availability for each pin (To be covered in Part 2)</li><li>Update the original CSV file with the generated descriptions</li></ol><p>In this first part of the series, we&rsquo;ll focus on steps 1, 2, and 6.</p><h2 id=setting-up-the-environment>Setting Up the Environment</h2><p>Before we begin, make sure you have the following prerequisites installed:</p><ul><li>Node.js</li><li>npm (Node Package Manager)</li></ul><p>We&rsquo;ll also be using the following libraries:</p><ul><li>csv-parser</li><li>axios</li><li>csv-writer</li></ul><p>To install these libraries, run the following command:</p><p><code>npm install csv-parser axios csv-writer</code></p><h2 id=reading-data-from-a-csv-file>Reading Data from a CSV File</h2><p>First, we need to read the data from the CSV file containing affiliate link names and URLs. We&rsquo;ll use the csv-parser library to parse the file and store its content in an array.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kr>async</span> <span class=kd>function</span> <span class=nx>parseCSV</span><span class=p>(</span><span class=nx>csvFile</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>data</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=k>new</span> <span class=nb>Promise</span><span class=p>((</span><span class=nx>resolve</span><span class=p>,</span> <span class=nx>reject</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>fs</span><span class=p>.</span><span class=nx>createReadStream</span><span class=p>(</span><span class=nx>csvFile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=nx>pipe</span><span class=p>(</span><span class=nx>csvParser</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;data&#39;</span><span class=p>,</span> <span class=p>(</span><span class=nx>row</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// Add &#39;Link Name&#39; and &#39;URL&#39; fields to the row object
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;Link Name&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;LINK NAME&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>                <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;URL&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;LINK CODE&#39;</span><span class=p>].</span><span class=nx>match</span><span class=p>(</span><span class=sr>/href=&#34;(.*?)&#34;/</span><span class=p>)[</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>                <span class=nx>data</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>row</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>})</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;end&#39;</span><span class=p>,</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>resolve</span><span class=p>(</span><span class=nx>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>})</span>
+</span></span><span class=line><span class=cl>            <span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;error&#39;</span><span class=p>,</span> <span class=p>(</span><span class=nx>error</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>reject</span><span class=p>(</span><span class=nx>error</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=generating-pinterest-descriptions-with-gpt-35-turbo>Generating Pinterest Descriptions with GPT-3.5 Turbo</h2><p>Next, we&rsquo;ll create a function that takes an affiliate link name as input and generates a Pinterest description using the GPT-3.5 Turbo model. This will help make your pins more engaging and informative, increasing the likelihood of users clicking on your affiliate links.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kr>async</span> <span class=kd>function</span> <span class=nx>generateDescription</span><span class=p>(</span><span class=nx>linkName</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>prompt</span> <span class=o>=</span> <span class=sb>`Generate a Pinterest description for the following link name: &#34;</span><span class=si>${</span><span class=nx>linkName</span><span class=si>}</span><span class=sb>&#34;. The description should be engaging and informative, suitable for a Pinterest pin.`</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>maxRetries</span> <span class=o>=</span> <span class=mi>3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>let</span> <span class=nx>retries</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=nx>retries</span> <span class=o>&lt;</span> <span class=nx>maxRetries</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>const</span> <span class=nx>response</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>axios</span><span class=p>.</span><span class=nx>post</span><span class=p>(</span><span class=nx>openaiEndpoint</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>model</span><span class=o>:</span> <span class=s1>&#39;gpt-3.5-turbo&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>messages</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>                    <span class=p>{</span>
+</span></span><span class=line><span class=cl>                        <span class=nx>role</span><span class=o>:</span> <span class=s1>&#39;user&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                        <span class=nx>content</span><span class=o>:</span> <span class=nx>prompt</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=p>},</span>
+</span></span><span class=line><span class=cl>                <span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=nx>temperature</span><span class=o>:</span> <span class=mf>0.8</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=p>},</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>headers</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=s1>&#39;Content-Type&#39;</span><span class=o>:</span> <span class=s1>&#39;application/json&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=s1>&#39;Authorization&#39;</span><span class=o>:</span> <span class=sb>`Bearer </span><span class=si>${</span><span class=nx>openaiApiKey</span><span class=si>}</span><span class=sb>`</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=p>});</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>response</span><span class=p>.</span><span class=nx>data</span><span class=p>.</span><span class=nx>choices</span><span class=p>[</span><span class=mi>0</span><span class=p>].</span><span class=nx>message</span><span class=p>.</span><span class=nx>content</span><span class=p>.</span><span class=nx>trim</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>error</span><span class=p>.</span><span class=nx>response</span> <span class=o>&amp;&amp;</span> <span class=nx>error</span><span class=p>.</span><span class=nx>response</span><span class=p>.</span><span class=nx>status</span> <span class=o>===</span> <span class=mi>429</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>retries</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=sb>`Error 429: Too many requests. Retrying in </span><span class=si>${</span><span class=mi>2</span> <span class=o>**</span> <span class=nx>retries</span><span class=si>}</span><span class=sb> seconds...`</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=kr>await</span> <span class=nx>sleep</span><span class=p>(</span><span class=mi>1000</span> <span class=o>*</span> <span class=p>(</span><span class=mi>2</span> <span class=o>**</span> <span class=nx>retries</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>console</span><span class=p>.</span><span class=nx>error</span><span class=p>(</span><span class=sb>`Error while generating description: </span><span class=si>${</span><span class=nx>error</span><span class=si>}</span><span class=sb>`</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>throw</span> <span class=nx>error</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span><span class=s1>&#39;Failed to generate description after maximum retries.&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=updating-the-original-csv-file>Updating the Original CSV File</h2><p>Finally, we&rsquo;ll update the original CSV file with the generated descriptions using the csv-writer library.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kr>async</span> <span class=kd>function</span> <span class=nx>writeOutputCSV</span><span class=p>(</span><span class=nx>row</span><span class=p>,</span> <span class=nx>filePath</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>csvWriter</span> <span class=o>=</span> <span class=nx>createCsvWriter</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=nx>path</span><span class=o>:</span> <span class=nx>filePath</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>append</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>header</span><span class=o>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span> <span class=nx>id</span><span class=o>:</span> <span class=s1>&#39;Link Name&#39;</span><span class=p>,</span> <span class=nx>title</span><span class=o>:</span> <span class=s1>&#39;Link Name&#39;</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span> <span class=nx>id</span><span class=o>:</span> <span class=s1>&#39;URL&#39;</span><span class=p>,</span> <span class=nx>title</span><span class=o>:</span> <span class=s1>&#39;URL&#39;</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span> <span class=nx>id</span><span class=o>:</span> <span class=s1>&#39;DESCRIPTION&#39;</span><span class=p>,</span> <span class=nx>title</span><span class=o>:</span> <span class=s1>&#39;Description&#39;</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span> <span class=nx>id</span><span class=o>:</span> <span class=s1>&#39;PROCESSED&#39;</span><span class=p>,</span> <span class=nx>title</span><span class=o>:</span> <span class=s1>&#39;Processed&#39;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>csvWriter</span><span class=p>.</span><span class=nx>writeRecords</span><span class=p>([{</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;Link Name&#39;</span><span class=o>:</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;Link Name&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;URL&#39;</span><span class=o>:</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;URL&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;DESCRIPTION&#39;</span><span class=o>:</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;DESCRIPTION&#39;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;PROCESSED&#39;</span><span class=o>:</span> <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;PROCESSED&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=p>}]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now, let&rsquo;s put it all together in a main function.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kr>async</span> <span class=kd>function</span> <span class=nx>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>csvFile</span> <span class=o>=</span> <span class=s1>&#39;csv/links.csv&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=kr>const</span> <span class=nx>csvData</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>parseCSV</span><span class=p>(</span><span class=nx>csvFile</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>csvData</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=p>(</span><span class=kr>const</span> <span class=nx>row</span> <span class=k>of</span> <span class=nx>csvData</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>await</span> <span class=nx>sleep</span><span class=p>(</span><span class=mi>5000</span><span class=p>);</span> <span class=c1>// Add a 5-second delay between each API call
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>generateDescription</span><span class=p>(</span><span class=nx>row</span><span class=p>[</span><span class=s1>&#39;LINK NAME&#39;</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>            <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=sb>`Generated description for </span><span class=si>${</span><span class=nx>row</span><span class=p>[</span><span class=s1>&#39;LINK NAME&#39;</span><span class=p>]</span><span class=si>}</span><span class=sb>: </span><span class=si>${</span><span class=nx>description</span><span class=si>}</span><span class=sb>`</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;PROCESSED&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=s1>&#39;Yes&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=nx>row</span><span class=p>[</span><span class=s1>&#39;DESCRIPTION&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=nx>description</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=kr>await</span> <span class=nx>writeOutputCSV</span><span class=p>(</span><span class=nx>row</span><span class=p>,</span> <span class=s1>&#39;csv/results.csv&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s1>&#39;Results CSV file updated with descriptions.&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>error</span><span class=p>(</span><span class=s1>&#39;Error:&#39;</span><span class=p>,</span> <span class=nx>error</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>In Part 2, we&rsquo;ll cover the remaining steps, including shortening URLs using the Bitly API, creating pins on Pinterest, and checking image availability for each pin. Stay tuned for more on how to automate your Pinterest affiliate marketing efforts using GPT-3.5 Turbo!</p></section><footer class=article-footer><section class=article-tags><a href=/tags/openai/>openai</a>
+<a href=/tags/javascript/>javascript</a>
+<a href=/tags/api/>api</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><div class=disqus-container></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2023 Thrifty Kiwi</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.16.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

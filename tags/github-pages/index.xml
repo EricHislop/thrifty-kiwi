@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github-Pages on Thrifty Kiwi</title><link>http://thriftykiwi.com/tags/github-pages/</link><description>Recent content in Github-Pages on Thrifty Kiwi</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 20 Mar 2023 23:37:10 +1300</lastBuildDate><atom:link href="http://thriftykiwi.com/tags/github-pages/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting Up a Hugo Stacks Blog</title><link>http://thriftykiwi.com/p/setting-up-a-hugo-stacks-blog/</link><pubDate>Mon, 20 Mar 2023 23:37:10 +1300</pubDate><guid>http://thriftykiwi.com/p/setting-up-a-hugo-stacks-blog/</guid><description>&lt;img src="http://thriftykiwi.com/p/setting-up-a-hugo-stacks-blog/programmers_desk_with_lots_of_computer_screens.png" alt="Featured image of post Setting Up a Hugo Stacks Blog" />&lt;h1 id="setting-up-hugo-theme-stack">Setting Up Hugo Theme Stack&lt;/h1>
+&lt;p>&lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> is a fast and flexible static site generator that allows you to build websites quickly and easily. One of the many benefits of using Hugo is the variety of themes available. In this tutorial, we will cover the setup process for the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Stack&lt;/a> theme, which is a modern and elegant theme that is perfect for building portfolios, personal websites, and blogs.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;p>Before getting started, you will need to have the following software installed on your computer:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://git-scm.com/" target="_blank" rel="noopener"
+>Git&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://golang.org/" target="_blank" rel="noopener"
+>Go&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="setup">Setup&lt;/h2>
+&lt;p>To get started, you&amp;rsquo;ll need to create a new repository on GitHub and use the Stack theme starter template. To do this, follow these steps:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Click the &amp;ldquo;Use this template&amp;rdquo; button on the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack-starter" target="_blank" rel="noopener"
+>Stack theme starter template&lt;/a> repository.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Name your repository and click &amp;ldquo;Create repository from template&amp;rdquo;.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Clone the repository to your local machine using Git.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Run &lt;code>hugo server&lt;/code> to start the local development server and see the default Stack theme in action.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="setting-up-favicon">Setting Up Favicon&lt;/h2>
+&lt;p>To set up a custom favicon for your Hugo site, follow these steps:&lt;/p>
+&lt;ol>
+&lt;li>Create an SVG file with the desired icon. For example:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">&amp;lt;svg xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;text y=&amp;#34;26&amp;#34; font-size=&amp;#34;26&amp;#34;&amp;gt;🥝&amp;lt;/text&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;/svg&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>
+&lt;p>On Windows you can press the Windows key and . to bring up emojis to use as a favicon.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Save the SVG file as &lt;code>favicon.svg&lt;/code> in the &lt;code>static&lt;/code> directory of your Hugo project.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Add the following link tag to the &lt;code>layouts/partials/head/custom.html&lt;/code> file:&lt;/p>
+&lt;p>&lt;code>&amp;lt;link rel=&amp;quot;icon&amp;quot; type=&amp;quot;image/svg+xml&amp;quot; href=&amp;quot;/favicon.svg&amp;quot;&amp;gt;&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Run &lt;code>hugo server&lt;/code> to view the site with the custom favicon.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="hosting-on-github-pages">Hosting on GitHub Pages&lt;/h2>
+&lt;p>To host your Hugo site on GitHub Pages, follow these steps:&lt;/p>
+&lt;ol>
+&lt;li>Push your changes to the repository on GitHub.&lt;/li>
+&lt;li>In the repository settings, navigate to the &amp;ldquo;Pages&amp;rdquo; section.&lt;/li>
+&lt;li>Under &amp;ldquo;Source&amp;rdquo;, select the branch you want to deploy (usually main) and click &amp;ldquo;Save&amp;rdquo;.&lt;/li>
+&lt;li>Wait a few minutes for GitHub Pages to build and deploy your site.&lt;/li>
+&lt;li>Visit &lt;code>https://&amp;lt;your-username&amp;gt;.github.io/&amp;lt;your-repository-name&amp;gt;/&lt;/code> in your browser to see your site live on GitHub Pages.&lt;/li>
+&lt;/ol>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>In this tutorial, we covered the setup process for the Stack theme in Hugo. We also showed you how to set up a custom favicon and host your Hugo site on GitHub Pages. With this knowledge, you should be able to build a beautiful and functional website using Hugo and the Stack theme. Happy building!&lt;/p></description></item></channel></rss>

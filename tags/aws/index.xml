@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on Thrifty Kiwi</title><link>http://thriftykiwi.com/tags/aws/</link><description>Recent content in AWS on Thrifty Kiwi</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 23 Mar 2023 22:14:39 +1300</lastBuildDate><atom:link href="http://thriftykiwi.com/tags/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>Aws Amplify React</title><link>http://thriftykiwi.com/p/aws-amplify-react/</link><pubDate>Thu, 23 Mar 2023 22:14:39 +1300</pubDate><guid>http://thriftykiwi.com/p/aws-amplify-react/</guid><description>&lt;img src="http://thriftykiwi.com/p/aws-amplify-react/cover.png" alt="Featured image of post Aws Amplify React" />&lt;h1 id="how-to-build-a-subscription-sharing-app-with-react-aws-amplify-and-graphql">How to Build a Subscription Sharing App with React, AWS Amplify, and GraphQL&lt;/h1>
+&lt;p>In this tutorial, we&amp;rsquo;ll build a web application for tracking and sharing subscription services like Netflix, Spotify, and YouTube. We&amp;rsquo;ll use React for the frontend, AWS Amplify for the backend, and GraphQL for our API.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Basic knowledge of JavaScript and React&lt;/li>
+&lt;li>An AWS account&lt;/li>
+&lt;li>Node.js and npm installed on your machine&lt;/li>
+&lt;/ul>
+&lt;h2 id="step-1-set-up-your-react-app">Step 1: Set Up Your React App&lt;/h2>
+&lt;p>Create a new React app using
+&lt;code>npx create-react-app kiwishare&lt;/code>
+Change to the project directory:&lt;/p>
+&lt;p>&lt;code>cd kiwishare&lt;/code>&lt;/p>
+&lt;p>Install the necessary dependencies:&lt;/p>
+&lt;p>&lt;code>npm install aws-amplify @aws-amplify/ui-react&lt;/code>&lt;/p>
+&lt;h2 id="step-2-install-and-configure-the-amplify-cli">Step 2: Install and Configure the Amplify CLI&lt;/h2>
+&lt;p>Install the Amplify CLI globally:&lt;/p>
+&lt;p>&lt;code>npm install -g @aws-amplify/cli&lt;/code>&lt;/p>
+&lt;p>Configure the Amplify CLI with your AWS account:&lt;/p>
+&lt;p>&lt;code>amplify configure&lt;/code>&lt;/p>
+&lt;p>Follow the prompts to complete the configuration process.&lt;/p>
+&lt;h2 id="step-3-initialize-amplify">Step 3: Initialize Amplify&lt;/h2>
+&lt;p>&lt;code>amplify init&lt;/code>&lt;/p>
+&lt;p>Follow the prompts to complete the Amplify initialization process.&lt;/p>
+&lt;h2 id="step-4-add-auth-and-api">Step 4: Add Auth and API&lt;/h2>
+&lt;p>Add authentication to your app:&lt;/p>
+&lt;p>&lt;code>amplify add auth&lt;/code>&lt;/p>
+&lt;p>Add a GraphQL API:&lt;/p>
+&lt;p>&lt;code>amplify add api&lt;/code>&lt;/p>
+&lt;p>Choose the &amp;ldquo;Amazon DynamoDB&amp;rdquo; as the data source.&lt;/p>
+&lt;h2 id="step-5-define-your-graphql-schema">Step 5: Define Your GraphQL Schema&lt;/h2>
+&lt;p>Edit the &lt;code>schema.graphql&lt;/code> file to define the data model for your app:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-graphql" data-lang="graphql">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">StreamingService&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@model&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@auth&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="py">rules&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[{&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">allow&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">owner&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">}])&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">id&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">ID&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">String&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">String&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">price&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">Float&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">sharings&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nc">Sharing&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nd">@hasMany&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="py">indexName&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s">&amp;#34;byStreamingService&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">fields&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s">&amp;#34;id&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nc">type&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="py">Sharing&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@model&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nd">@auth&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="py">rules&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[{&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">allow&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">owner&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">}])&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">id&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">ID&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">String&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="py">streamingServiceID&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">ID&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nd">@index&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="py">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s">&amp;#34;byStreamingService&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nc">streamingService&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nc">StreamingService&lt;/span>&lt;span class="p">!&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nd">@belongsTo&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="py">fields&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s">&amp;#34;streamingServiceID&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="step-6-deploy-your-backend">Step 6: Deploy Your Backend&lt;/h2>
+&lt;p>&lt;code>amplify push&lt;/code>&lt;/p>
+&lt;p>This command will create and configure the necessary backend resources in your AWS account.&lt;/p>
+&lt;h2 id="step-7-update-your-react-app">Step 7: Update Your React App&lt;/h2>
+&lt;p>Integrate Amplify into your React app by adding the necessary imports and configurations.&lt;/p>
+&lt;h2 id="step-8-run-your-app">Step 8: Run Your App&lt;/h2>
+&lt;p>&lt;code>npm start&lt;/code>&lt;/p>
+&lt;p>Your app should now be running on &lt;a class="link" href="http://localhost:3000" target="_blank" rel="noopener"
+>http://localhost:3000&lt;/a>. You can now sign up, sign in, and start using the app to track and share subscription services!&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>In this tutorial, we built a subscription sharing app using React, AWS Amplify, and GraphQL. We learned how to set up a React app, configure Amplify, define a GraphQL schema, and deploy our backend to AWS. This is just the beginning – you can now customize and expand your app to add more features and functionality!&lt;/p>
+&lt;p>Happy coding! 🚀&lt;/p></description></item></channel></rss>
