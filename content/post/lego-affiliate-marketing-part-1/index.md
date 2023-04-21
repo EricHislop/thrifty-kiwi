@@ -12,7 +12,7 @@ categories: ["GPT-3", "Pinterest", "Affiliate Marketing", "Automation"]
 tags: ["openai", "javascript", "api"]
 ---
 
-In this part series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we'll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.
+In this multipart series, we will explore how to automate affiliate marketing by generating engaging Pinterest descriptions using GPT-3.5 Turbo and automating the pin creation process. This is Part 1, where we'll cover using GPT-3.5 Turbo to generate descriptions and processing the input CSV file.
 
 Check out my [Pinterest pins](https://www.pinterest.nz/ericlhislop/pins/) to see the results of this automation tool in action.
 
