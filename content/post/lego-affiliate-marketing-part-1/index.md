@@ -2,7 +2,7 @@
 title: "Creating a Pinterest Affiliate Marketing Automation Tool using GPT-3.5 Turbo (Part 1)"
 description: 
 date: 2023-04-21T16:42:30+12:00
-image: "A_thrilling_and_imaginative_scene_of_a_Lego_Land_Rover.png"
+image: "cover.png"
 math: 
 license: 
 hidden: false
